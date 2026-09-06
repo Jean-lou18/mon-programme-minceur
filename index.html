@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,6 +12,7 @@
             color: #333;
             margin: 0;
             padding: 15px;
+            padding-bottom: 50px;
         }
         .container {
             max-width: 600px;
@@ -71,14 +73,19 @@
             background-color: #27ae60;
         }
         .btn-purple {
-            background-color: #9b59b6;
+            background-color: #8e44ad;
+            color: white;
             width: 100%;
-            font-size: 1rem;
+            padding: 15px;
+            font-size: 1.1rem;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
         .btn-purple:hover {
-            background-color: #8e44ad;
+            background-color: #732d91;
         }
         .result {
             font-weight: bold;
@@ -87,7 +94,7 @@
         }
         .history-item {
             background: #fff;
-            border-left: 4px solid #9b59b6;
+            border-left: 4px solid #8e44ad;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 4px;
@@ -145,11 +152,11 @@
         <textarea id="activite" placeholder="Ex: 45 min de marche, renforcement musculaire..." oninput="sauvegarderCourant()"></textarea>
     </div>
 
-    <!-- BOUTON VALIDATION JOURNEE -->
-    <button class="btn-purple" onclick="validerJournee()">🏁 Clôturer et enregistrer la journée</button>
+    <!-- BOUTON VALIDATION JOURNEE (BIEN VISIBLE) -->
+    <button class="btn-purple" onclick="validerJournee()">🏁 CLÔTURER ET ENREGISTRER LA JOURNÉE</button>
 
     <!-- HISTORIQUE -->
-    <div class="card" style="margin-top: 20px;">
+    <div class="card">
         <h2>Historique de vos journées</h2>
         <div id="listeHistorique">Aucune journée enregistrée pour l'instant.</div>
     </div>
@@ -206,11 +213,12 @@
             collations: document.getElementById('collations').value
         };
 
-        historique.unshift(resumeJournee); // Ajoute en haut de liste
+        historique.unshift(resumeJournee);
         localStorage.setItem('suiviHistorique', JSON.stringify(historique));
         
         afficherHistorique();
         alert('Journée clôturée et enregistrée dans l\'historique avec succès !');
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     function afficherHistorique() {
@@ -238,7 +246,6 @@
     }
 
     window.onload = function() {
-        // Charger saisie en cours
         const sauvegarde = localStorage.getItem('suiviMinceurCourant');
         if (sauvegarde) {
             const data = JSON.parse(sauvegarde);
@@ -254,7 +261,6 @@
             if(data.pas) document.getElementById('pas').value = data.pas;
             if(data.activite) document.getElementById('activite').value = data.activite;
         }
-        // Afficher l'historique
         afficherHistorique();
     };
 </script>
