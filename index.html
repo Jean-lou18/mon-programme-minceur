@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Programme Minceur & Suivi</title>
+    <title>Mon Programme Minceur & Historique</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -55,7 +55,7 @@
             background-color: #3498db;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             margin: 5px 5px 0 0;
             border-radius: 4px;
             cursor: pointer;
@@ -70,10 +70,29 @@
         .btn-green:hover {
             background-color: #27ae60;
         }
+        .btn-purple {
+            background-color: #9b59b6;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .btn-purple:hover {
+            background-color: #8e44ad;
+        }
         .result {
             font-weight: bold;
             color: #e67e22;
             margin-top: 5px;
+        }
+        .history-item {
+            background: #fff;
+            border-left: 4px solid #9b59b6;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -86,7 +105,7 @@
     <div class="card">
         <h2>Poids du jour</h2>
         <label for="poids">Entrez votre poids (kg) :</label>
-        <input type="number" id="poids" step="0.1" value="137" oninput="sauvegarder()">
+        <input type="number" id="poids" step="0.1" value="137" oninput="sauvegarderCourant()">
         <div class="result">Départ : 137 kg</div>
     </div>
 
@@ -104,26 +123,35 @@
     <div class="card">
         <h2>Nutrition & Protéines (Cible : 150g / repas)</h2>
         <label>Repas 1 (Matin) :</label>
-        <textarea id="repas1" placeholder="Ex: Œufs, fromage blanc..." oninput="sauvegarder()"></textarea>
+        <textarea id="repas1" placeholder="Ex: Œufs, fromage blanc..." oninput="sauvegarderCourant()"></textarea>
         
         <label>Repas 2 (Midi) :</label>
-        <textarea id="repas2" placeholder="Ex: 150g de poulet, légumes..." oninput="sauvegarder()"></textarea>
+        <textarea id="repas2" placeholder="Ex: 150g de poulet, légumes..." oninput="sauvegarderCourant()"></textarea>
         
         <label>Repas 3 (Soir) :</label>
-        <textarea id="repas3" placeholder="Ex: 150g de poisson, salade..." oninput="sauvegarder()"></textarea>
+        <textarea id="repas3" placeholder="Ex: 150g de poisson, salade..." oninput="sauvegarderCourant()"></textarea>
         
         <label>Collations / Divers :</label>
-        <textarea id="collations" placeholder="En-cas, shaker..." oninput="sauvegarder()"></textarea>
+        <textarea id="collations" placeholder="En-cas, shaker..." oninput="sauvegarderCourant()"></textarea>
     </div>
 
     <!-- SPORT ET ACTIVITE -->
     <div class="card">
         <h2>Sport & Activité Physique</h2>
         <label for="pas">Nombre de pas :</label>
-        <input type="number" id="pas" placeholder="Ex: 8500" oninput="sauvegarder()">
+        <input type="number" id="pas" placeholder="Ex: 8500" oninput="sauvegarderCourant()">
 
         <label for="activite">Séance de sport / Activité :</label>
-        <textarea id="activite" placeholder="Ex: 45 min de marche, renforcement musculaire..." oninput="sauvegarder()"></textarea>
+        <textarea id="activite" placeholder="Ex: 45 min de marche, renforcement musculaire..." oninput="sauvegarderCourant()"></textarea>
+    </div>
+
+    <!-- BOUTON VALIDATION JOURNEE -->
+    <button class="btn-purple" onclick="validerJournee()">🏁 Clôturer et enregistrer la journée</button>
+
+    <!-- HISTORIQUE -->
+    <div class="card" style="margin-top: 20px;">
+        <h2>Historique de vos journées</h2>
+        <div id="listeHistorique">Aucune journée enregistrée pour l'instant.</div>
     </div>
 
 </div>
@@ -134,16 +162,16 @@
     function ajouterEau(val) {
         eauTotale = Math.round((eauTotale + val) * 100) / 100;
         document.getElementById('totalEau').innerText = eauTotale;
-        sauvegarder();
+        sauvegarderCourant();
     }
 
     function remettreEau() {
         eauTotale = 0;
         document.getElementById('totalEau').innerText = eauTotale;
-        sauvegarder();
+        sauvegarderCourant();
     }
 
-    function sauvegarder() {
+    function sauvegarderCourant() {
         const donnees = {
             poids: document.getElementById('poids').value,
             eau: eauTotale,
@@ -154,11 +182,64 @@
             pas: document.getElementById('pas').value,
             activite: document.getElementById('activite').value
         };
-        localStorage.setItem('suiviMinceur', JSON.stringify(donnees));
+        localStorage.setItem('suiviMinceurCourant', JSON.stringify(donnees));
+    }
+
+    function validerJournee() {
+        const poids = document.getElementById('poids').value;
+        const pas = document.getElementById('pas').value || '0';
+        const activite = document.getElementById('activite').value || 'Aucune';
+        
+        let historique = JSON.parse(localStorage.getItem('suiviHistorique')) || [];
+        const numeroJour = historique.length + 1;
+        const dateJour = new Date().toLocaleDateString('fr-FR');
+
+        const resumeJournee = {
+            titre: `Jour ${numeroJour} (${dateJour})`,
+            poids: poids,
+            eau: eauTotale,
+            pas: pas,
+            activite: activite,
+            repas1: document.getElementById('repas1').value,
+            repas2: document.getElementById('repas2').value,
+            repas3: document.getElementById('repas3').value,
+            collations: document.getElementById('collations').value
+        };
+
+        historique.unshift(resumeJournee); // Ajoute en haut de liste
+        localStorage.setItem('suiviHistorique', JSON.stringify(historique));
+        
+        afficherHistorique();
+        alert('Journée clôturée et enregistrée dans l\'historique avec succès !');
+    }
+
+    function afficherHistorique() {
+        let historique = JSON.parse(localStorage.getItem('suiviHistorique')) || [];
+        const conteneur = document.getElementById('listeHistorique');
+        
+        if (historique.length === 0) {
+            conteneur.innerHTML = 'Aucune journée enregistrée pour l\'instant.';
+            return;
+        }
+
+        let html = '';
+        historique.forEach(j => {
+            html += `<div class="history-item">
+                <strong>${j.titre}</strong><br>
+                ⚖️ Poids : ${j.poids} kg | 💧 Eau : ${j.eau} L | 👟 Pas : ${j.pas}<br>
+                🏋️ Sport : ${j.activite}<br>
+                🍽️ <em>Matin :</em> ${j.repas1 || '-'}<br>
+                🍽️ <em>Midi :</em> ${j.repas2 || '-'}<br>
+                🍽️ <em>Soir :</em> ${j.repas3 || '-'}<br>
+                🍎 <em>Collations :</em> ${j.collations || '-'}
+            </div>`;
+        });
+        conteneur.innerHTML = html;
     }
 
     window.onload = function() {
-        const sauvegarde = localStorage.getItem('suiviMinceur');
+        // Charger saisie en cours
+        const sauvegarde = localStorage.getItem('suiviMinceurCourant');
         if (sauvegarde) {
             const data = JSON.parse(sauvegarde);
             if(data.poids) document.getElementById('poids').value = data.poids;
@@ -173,6 +254,8 @@
             if(data.pas) document.getElementById('pas').value = data.pas;
             if(data.activite) document.getElementById('activite').value = data.activite;
         }
+        // Afficher l'historique
+        afficherHistorique();
     };
 </script>
 
