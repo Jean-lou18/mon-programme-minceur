@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Programme Minceur - Menu & Réel</title>
+    <title>Mon Programme Minceur - Menus & Suivi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,6 +41,7 @@
         }
         .card-menu { border-left: 4px solid #3498db; }
         .card-reel { border-left: 4px solid #e67e22; }
+        .card-semaine { border-left: 4px solid #9b59b6; background: #fdfbff; }
         
         label {
             display: block;
@@ -56,6 +57,9 @@
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 0.9rem;
+        }
+        textarea.semaine-input {
+            height: 120px;
         }
         button {
             background-color: #3498db;
@@ -118,7 +122,14 @@
 <body>
 
 <div class="container">
-    <h1>Suivi Minceur : Menu vs Réel</h1>
+    <h1>Suivi Minceur & Menus</h1>
+
+    <!-- BLOC MENU DE LA SEMAINE MODIFIABLE -->
+    <div class="card card-semaine">
+        <h2>📝 Mon Programme / Menu de la Semaine</h2>
+        <label>Écrivez ou modifiez vos idées de menus pour la semaine ici :</label>
+        <textarea id="menuSemaineGlobal" class="semaine-input" placeholder="Notez ici votre menu de la semaine (idées de repas, courses, etc.)..." oninput="sauvegarderCourant()"></textarea>
+    </div>
 
     <!-- POIDS & EAU -->
     <div class="card">
@@ -138,7 +149,7 @@
     <div class="comparison">
         <!-- COLONNE MENU -->
         <div class="card card-menu">
-            <h2>📋 Le Menu (Prévu)</h2>
+            <h2>📋 Menu du Jour (Prévu)</h2>
             <label>Matin :</label>
             <textarea id="menuMatin" placeholder="Prévu..." oninput="sauvegarderCourant()"></textarea>
             
@@ -207,6 +218,7 @@
 
     function sauvegarderCourant() {
         const donnees = {
+            menuSemaineGlobal: document.getElementById('menuSemaineGlobal').value,
             poids: document.getElementById('poids').value,
             eau: eauTotale,
             menuMatin: document.getElementById('menuMatin').value,
@@ -289,6 +301,7 @@
         const sauvegarde = localStorage.getItem('suiviMinceurMenuReel');
         if (sauvegarde) {
             const data = JSON.parse(sauvegarde);
+            if(data.menuSemaineGlobal) document.getElementById('menuSemaineGlobal').value = data.menuSemaineGlobal;
             if(data.poids) document.getElementById('poids').value = data.poids;
             if(data.eau) {
                 eauTotale = data.eau;
