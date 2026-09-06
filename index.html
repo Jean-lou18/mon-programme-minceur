@@ -1,13 +1,10 @@
 
-
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Programme Minceur & Historique</title>
+    <title>Mon Programme Minceur - Menu & Réel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +15,7 @@
             padding-bottom: 50px;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background: #fff;
             padding: 20px;
@@ -42,10 +39,14 @@
             color: #1abc9c;
             margin-top: 0;
         }
+        .card-menu { border-left: 4px solid #3498db; }
+        .card-reel { border-left: 4px solid #e67e22; }
+        
         label {
             display: block;
+            margin-top: 8px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         input, textarea {
             width: 100%;
@@ -54,10 +55,10 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 0.9rem;
         }
         button {
-              margin-top: 8px;
-          background-color: #3498db;
+            background-color: #3498db;
             color: white;
             border: none;
             padding: 10px 15px;
@@ -98,51 +99,74 @@
         .history-item {
             background: #fff;
             border-left: 4px solid #8e44ad;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             font-size: 0.85rem;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        @media (max-width: 500px) {
+            .comparison { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Mon Suivi Quotidien</h1>
+    <h1>Suivi Minceur : Menu vs Réel</h1>
 
-    <!-- POIDS -->
+    <!-- POIDS & EAU -->
     <div class="card">
-        <h2>Poids du jour</h2>
-        <label for="poids">Entrez votre poids (kg) :</label>
+        <h2>Bilan du Jour</h2>
+        <label for="poids">Poids du jour (kg) :</label>
         <input type="number" id="poids" step="0.1" value="137" oninput="sauvegarderCourant()">
         <div class="result">Départ : 137 kg</div>
-    </div>
 
-    <!-- EAU -->
-    <div class="card">
-        <h2>Hydratation (Eau)</h2>
-        <p>Total bu : <span id="totalEau">0</span> Litres</p>
+        <label style="margin-top: 15px;">Hydratation (Eau) : <span id="totalEau">0</span> Litres</label>
         <button onclick="ajouterEau(0.25)">+ 0,25 L</button>
         <button onclick="ajouterEau(0.33)">+ 0,33 L</button>
         <button onclick="ajouterEau(0.5)">+ 0,50 L</button>
         <button class="btn-green" onclick="remettreEau()">Remettre à 0</button>
     </div>
 
-    <!-- NUTRITION -->
-    <div class="card">
-        <h2>Nutrition & Protéines (Cible : 150g / repas)</h2>
-        <label>Repas 1 (Matin) :</label>
-        <textarea id="repas1" placeholder="Ex: Œufs, fromage blanc..." oninput="sauvegarderCourant()"></textarea>
-        
-        <label>Repas 2 (Midi) :</label>
-        <textarea id="repas2" placeholder="Ex: 150g de poulet, légumes..." oninput="sauvegarderCourant()"></textarea>
-        
-        <label>Repas 3 (Soir) :</label>
-        <textarea id="repas3" placeholder="Ex: 150g de poisson, salade..." oninput="sauvegarderCourant()"></textarea>
-        
-        <label>Collations / Divers :</label>
-        <textarea id="collations" placeholder="En-cas, shaker..." oninput="sauvegarderCourant()"></textarea>
+    <!-- COMPARATIF MENU PREVU VS REEL -->
+    <div class="comparison">
+        <!-- COLONNE MENU -->
+        <div class="card card-menu">
+            <h2>📋 Le Menu (Prévu)</h2>
+            <label>Matin :</label>
+            <textarea id="menuMatin" placeholder="Prévu..." oninput="sauvegarderCourant()"></textarea>
+            
+            <label>Midi :</label>
+            <textarea id="menuMidi" placeholder="Prévu..." oninput="sauvegarderCourant()"></textarea>
+            
+            <label>Soir :</label>
+            <textarea id="menuSoir" placeholder="Prévu..." oninput="sauvegarderCourant()"></textarea>
+            
+            <label>Collations :</label>
+            <textarea id="menuCollarions" placeholder="Prévu..." oninput="sauvegarderCourant()"></textarea>
+        </div>
+
+        <!-- COLONNE REEL -->
+        <div class="card card-reel">
+            <h2>🎯 Le Réel (Consommé)</h2>
+            <label>Matin :</label>
+            <textarea id="reelMatin" placeholder="Mangé..." oninput="sauvegarderCourant()"></textarea>
+            
+            <label>Midi :</label>
+            <textarea id="reelMidi" placeholder="Mangé..." oninput="sauvegarderCourant()"></textarea>
+            
+            <label>Soir :</label>
+            <textarea id="reelSoir" placeholder="Mangé..." oninput="sauvegarderCourant()"></textarea>
+            
+            <label>Collations :</label>
+            <textarea id="reelCollations" placeholder="Mangé..." oninput="sauvegarderCourant()"></textarea>
+        </div>
     </div>
 
     <!-- SPORT ET ACTIVITE -->
@@ -152,15 +176,15 @@
         <input type="number" id="pas" placeholder="Ex: 8500" oninput="sauvegarderCourant()">
 
         <label for="activite">Séance de sport / Activité :</label>
-        <textarea id="activite" placeholder="Ex: 45 min de marche, renforcement musculaire..." oninput="sauvegarderCourant()"></textarea>
+        <textarea id="activite" placeholder="Ex: 45 min de marche..." oninput="sauvegarderCourant()"></textarea>
     </div>
 
-    <!-- BOUTON VALIDATION JOURNEE (BIEN VISIBLE) -->
+    <!-- BOUTON VALIDATION -->
     <button class="btn-purple" onclick="validerJournee()">🏁 CLÔTURER ET ENREGISTRER LA JOURNÉE</button>
 
-    <!-- HISTORIQUE -->
+    <!-- HISTORIQUE COMPARATIF -->
     <div class="card">
-        <h2>Historique de vos journées</h2>
+        <h2>Historique & Comparatif (Menu vs Réel)</h2>
         <div id="listeHistorique">Aucune journée enregistrée pour l'instant.</div>
     </div>
 
@@ -185,14 +209,18 @@
         const donnees = {
             poids: document.getElementById('poids').value,
             eau: eauTotale,
-            repas1: document.getElementById('repas1').value,
-            repas2: document.getElementById('repas2').value,
-            repas3: document.getElementById('repas3').value,
-            collations: document.getElementById('collations').value,
+            menuMatin: document.getElementById('menuMatin').value,
+            menuMidi: document.getElementById('menuMidi').value,
+            menuSoir: document.getElementById('menuSoir').value,
+            menuCollarions: document.getElementById('menuCollarions').value,
+            reelMatin: document.getElementById('reelMatin').value,
+            reelMidi: document.getElementById('reelMidi').value,
+            reelSoir: document.getElementById('reelSoir').value,
+            reelCollations: document.getElementById('reelCollations').value,
             pas: document.getElementById('pas').value,
             activite: document.getElementById('activite').value
         };
-        localStorage.setItem('suiviMinceurCourant', JSON.stringify(donnees));
+        localStorage.setItem('suiviMinceurMenuReel', JSON.stringify(donnees));
     }
 
     function validerJournee() {
@@ -200,7 +228,7 @@
         const pas = document.getElementById('pas').value || '0';
         const activite = document.getElementById('activite').value || 'Aucune';
         
-        let historique = JSON.parse(localStorage.getItem('suiviHistorique')) || [];
+        let historique = JSON.parse(localStorage.getItem('historiqueMenuReel')) || [];
         const numeroJour = historique.length + 1;
         const dateJour = new Date().toLocaleDateString('fr-FR');
 
@@ -210,22 +238,26 @@
             eau: eauTotale,
             pas: pas,
             activite: activite,
-            repas1: document.getElementById('repas1').value,
-            repas2: document.getElementById('repas2').value,
-            repas3: document.getElementById('repas3').value,
-            collations: document.getElementById('collations').value
+            menuMatin: document.getElementById('menuMatin').value,
+            menuMidi: document.getElementById('menuMidi').value,
+            menuSoir: document.getElementById('menuSoir').value,
+            menuCollarions: document.getElementById('menuCollarions').value,
+            reelMatin: document.getElementById('reelMatin').value,
+            reelMidi: document.getElementById('reelMidi').value,
+            reelSoir: document.getElementById('reelSoir').value,
+            reelCollations: document.getElementById('reelCollations').value
         };
 
         historique.unshift(resumeJournee);
-        localStorage.setItem('suiviHistorique', JSON.stringify(historique));
+        localStorage.setItem('historiqueMenuReel', JSON.stringify(historique));
         
         afficherHistorique();
-        alert('Journée clôturée et enregistrée dans l\'historique avec succès !');
+        alert('Journée enregistrée avec son comparatif Menu vs Réel !');
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     function afficherHistorique() {
-        let historique = JSON.parse(localStorage.getItem('suiviHistorique')) || [];
+        let historique = JSON.parse(localStorage.getItem('historiqueMenuReel')) || [];
         const conteneur = document.getElementById('listeHistorique');
         
         if (historique.length === 0) {
@@ -237,19 +269,24 @@
         historique.forEach(j => {
             html += `<div class="history-item">
                 <strong>${j.titre}</strong><br>
-                ⚖️ Poids : ${j.poids} kg | 💧 Eau : ${j.eau} L | 👟 Pas : ${j.pas}<br>
-                🏋️ Sport : ${j.activite}<br>
-                🍽️ <em>Matin :</em> ${j.repas1 || '-'}<br>
-                🍽️ <em>Midi :</em> ${j.repas2 || '-'}<br>
-                🍽️ <em>Soir :</em> ${j.repas3 || '-'}<br>
-                🍎 <em>Collations :</em> ${j.collations || '-'}
+                ⚖️ Poids : ${j.poids} kg | 💧 Eau : ${j.eau} L | 👟 Pas : ${j.pas} | 🏋️ Sport : ${j.activite}<br><br>
+                📋 <strong>Menu prévu :</strong><br>
+                - Matin : ${j.menuMatin || '-'}<br>
+                - Midi : ${j.menuMidi || '-'}<br>
+                - Soir : ${j.menuSoir || '-'}<br>
+                - Collations : ${j.menuCollarions || '-'}<br><br>
+                🎯 <strong>Réel consommé :</strong><br>
+                - Matin : ${j.reelMatin || '-'}<br>
+                - Midi : ${j.reelMidi || '-'}<br>
+                - Soir : ${j.reelSoir || '-'}<br>
+                - Collations : ${j.reelCollations || '-'}
             </div>`;
         });
         conteneur.innerHTML = html;
     }
 
     window.onload = function() {
-        const sauvegarde = localStorage.getItem('suiviMinceurCourant');
+        const sauvegarde = localStorage.getItem('suiviMinceurMenuReel');
         if (sauvegarde) {
             const data = JSON.parse(sauvegarde);
             if(data.poids) document.getElementById('poids').value = data.poids;
@@ -257,13 +294,20 @@
                 eauTotale = data.eau;
                 document.getElementById('totalEau').innerText = eauTotale;
             }
-            if(data.repas1) document.getElementById('repas1').value = data.repas1;
-            if(data.repas2) document.getElementById('repas2').value = data.repas2;
-            if(data.repas3) document.getElementById('repas3').value = data.repas3;
-            if(data.collations) document.getElementById('collations').value = data.collations;
+            if(data.menuMatin) document.getElementById('menuMatin').value = data.menuMatin;
+            if(data.menuMidi) document.getElementById('menuMidi').value = data.menuMidi;
+            if(data.menuSoir) document.getElementById('menuSoir').value = data.menuSoir;
+            if(data.menuCollarions) document.getElementById('menuCollarions').value = data.menuCollarions;
+            if(data.reelMatin) document.getElementById('reelMatin').value = data.reelMatin;
+            if(data.reelMidi) document.getElementById('reelMidi').value = data.reelMidi;
+            if(data.reelSoir) document.getElementById('reelSoir').value = data.reelSoir;
+            if(data.reelCollations) document.getElementById('reelCollations').value = data.reelCollations;
             if(data.pas) document.getElementById('pas').value = data.pas;
             if(data.activite) document.getElementById('activite').value = data.activite;
         }
         afficherHistorique();
     };
 </script>
+
+</body>
+</html>
