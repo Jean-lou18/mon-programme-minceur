@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Programme Minceur - Menus & Suivi</title>
+    <title>Mon Programme Minceur - Menu & Réel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
             padding-bottom: 50px;
         }
         .container {
-            max-width: 680px;
+            max-width: 650px;
             margin: 0 auto;
             background: #fff;
             padding: 20px;
@@ -41,8 +41,7 @@
         }
         .card-menu { border-left: 4px solid #3498db; }
         .card-reel { border-left: 4px solid #e67e22; }
-        .card-planning { border-left: 4px solid #9b59b6; background: #fcf8fc; }
-
+        
         label {
             display: block;
             margin-top: 8px;
@@ -111,94 +110,15 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-        .planning-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            margin-top: 10px;
-        }
-        .planning-table th, .planning-table td {
-            border: 1px solid #d1d5db;
-            padding: 6px 8px;
-            text-align: left;
-            vertical-align: top;
-        }
-        .planning-table th {
-            background-color: #9b59b6;
-            color: white;
-        }
         @media (max-width: 500px) {
             .comparison { grid-template-columns: 1fr; }
-            .planning-table { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Suivi Minceur : Menu & Réel</h1>
-
-    <!-- TABLEAU RECAPITULATIF DE LA SEMAINE (PLANNING) -->
-    <div class="card card-planning">
-        <h2>📅 Programme de la Semaine (Sans Brocoli)</h2>
-        <p style="font-size: 0.8rem; color: #666; margin-top:0;">Votre feuille de route globale pour les courses et la visibilité :</p>
-        <div style="overflow-x: auto;">
-            <table class="planning-table">
-                <thead>
-                    <tr>
-                        <th>Jour</th>
-                        <th>Matin</th>
-                        <th>Midi</th>
-                        <th>Soir</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Lundi</strong></td>
-                        <td>Omelette 2 œufs, thé/café</td>
-                        <td>Pavé de cabillaud/saumon, courgettes/tomates, fruit</td>
-                        <td>Velouté de légumes, jambon blanc, yaourt</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mardi</strong></td>
-                        <td>Fromage blanc 0% + fruits rouges, thé/café</td>
-                        <td>Blanc de poulet, haricots verts, quinoa</td>
-                        <td>Omelette champignons, salade verte, compote</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mercredi</strong></td>
-                        <td>2 œufs durs + pain complet, thé/café</td>
-                        <td>Bavette / steak 5%, ratatouille</td>
-                        <td>Papillote de colin, carottes râpées, fruit</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jeudi</strong></td>
-                        <td>Omelette fromage, thé/café</td>
-                        <td>Escalope de dinde, haricots plats, pomme</td>
-                        <td>Soupe de légumes, œuf poché, laitage 0%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vendredi</strong></td>
-                        <td>Fromage blanc + cannelle, thé/café</td>
-                        <td>Filet de lotte, fondue de poireaux, riz basmati</td>
-                        <td>Salade composée (œufs, poulet, tomates), fruit</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Samedi</strong></td>
-                        <td>Œufs brouillés tomate, thé/café</td>
-                        <td>Rôti de porc maigre, champignons, carottes</td>
-                        <td>Velouté courgettes, poulet effiloché, yaourt</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Dimanche</strong></td>
-                        <td>Omelette complète, thé/café</td>
-                        <td>Pavé de saumon, julienne de légumes, pomme au four</td>
-                        <td>Soupe légère, jambon de volaille, compote</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <h1>Suivi Minceur : Menu vs Réel</h1>
 
     <!-- POIDS & EAU -->
     <div class="card">
