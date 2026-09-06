@@ -1,58 +1,181 @@
 
-</script></body>
-</html>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Programme Minceur</title>
+    <title>Mon Programme Minceur & Suivi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f4f6f9;
             color: #333;
+            margin: 0;
+            padding: 15px;
         }
         .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #2c3e50;
             text-align: center;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+        .card {
+            background: #fafbfc;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
         }
         h2 {
-            color: #16a085;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 5px;
+            font-size: 1.1rem;
+            color: #1abc9c;
+            margin-top: 0;
         }
-        ul {
-            padding-left: 20px;
+        label {
+            display: block;
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 5px 5px 0 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .btn-green {
+            background-color: #2ecc71;
+        }
+        .btn-green:hover {
+            background-color: #27ae60;
+        }
+        .result {
+            font-weight: bold;
+            color: #e67e22;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Mon Programme Minceur</h1>
-    
-    <p>Bienvenue sur mon site personnel dédié à mon suivi et à mes objectifs.</p>
-    
-    <h2>Mes Objectifs</h2>
-    <ul>
-        <p>Écrivez ici vos objectifs principaux (par exemple : manger équilibré, bouger plus, etc.).</p>
-    </ul>
+    <h1>Mon Suivi Quotidien</h1>
 
-    <h2>Mon Suivi Quotidien</h2>
-    <p>Ajoutez ici vos notes, vos menus ou vos bilans de la semaine.</p>
+    <!-- POIDS -->
+    <div class="card">
+        <h2>Poids du jour</h2>
+        <label for="poids">Entrez votre poids (kg) :</label>
+        <input type="number" id="poids" step="0.1" value="137" oninput="sauvegarder()">
+        <div class="result">Départ : 137 kg</div>
+    </div>
+
+    <!-- EAU -->
+    <div class="card">
+        <h2>Hydratation (Eau)</h2>
+        <p>Total bu : <span id="totalEau">0</span> Litres</p>
+        <button onclick="ajouterEau(0.25)">+ 0,25 L</button>
+        <button onclick="ajouterEau(0.33)">+ 0,33 L</button>
+        <button onclick="ajouterEau(0.5)">+ 0,50 L</button>
+        <button class="btn-green" onclick="remettreEau()">Remettre à 0</button>
+    </div>
+
+    <!-- NUTRITION -->
+    <div class="card">
+        <h2>Nutrition & Protéines (Cible : 150g / repas)</h2>
+        <label>Repas 1 (Matin) :</label>
+        <textarea id="repas1" placeholder="Ex: Œufs, fromage blanc..." oninput="sauvegarder()"></textarea>
+        
+        <label>Repas 2 (Midi) :</label>
+        <textarea id="repas2" placeholder="Ex: 150g de poulet, légumes..." oninput="sauvegarder()"></textarea>
+        
+        <label>Repas 3 (Soir) :</label>
+        <textarea id="repas3" placeholder="Ex: 150g de poisson, salade..." oninput="sauvegarder()"></textarea>
+        
+        <label>Collations / Divers :</label>
+        <textarea id="collations" placeholder="En-cas, shaker..." oninput="sauvegarder()"></textarea>
+    </div>
+
+    <!-- SPORT ET ACTIVITE -->
+    <div class="card">
+        <h2>Sport & Activité Physique</h2>
+        <label for="pas">Nombre de pas :</label>
+        <input type="number" id="pas" placeholder="Ex: 8500" oninput="sauvegarder()">
+
+        <label for="activite">Séance de sport / Activité :</label>
+        <textarea id="activite" placeholder="Ex: 45 min de marche, renforcement musculaire..." oninput="sauvegarder()"></textarea>
+    </div>
+
 </div>
+
+<script>
+    let eauTotale = 0;
+
+    function ajouterEau(val) {
+        eauTotale = Math.round((eauTotale + val) * 100) / 100;
+        document.getElementById('totalEau').innerText = eauTotale;
+        sauvegarder();
+    }
+
+    function remettreEau() {
+        eauTotale = 0;
+        document.getElementById('totalEau').innerText = eauTotale;
+        sauvegarder();
+    }
+
+    function sauvegarder() {
+        const donnees = {
+            poids: document.getElementById('poids').value,
+            eau: eauTotale,
+            repas1: document.getElementById('repas1').value,
+            repas2: document.getElementById('repas2').value,
+            repas3: document.getElementById('repas3').value,
+            collations: document.getElementById('collations').value,
+            pas: document.getElementById('pas').value,
+            activite: document.getElementById('activite').value
+        };
+        localStorage.setItem('suiviMinceur', JSON.stringify(donnees));
+    }
+
+    window.onload = function() {
+        const sauvegarde = localStorage.getItem('suiviMinceur');
+        if (sauvegarde) {
+            const data = JSON.parse(sauvegarde);
+            if(data.poids) document.getElementById('poids').value = data.poids;
+            if(data.eau) {
+                eauTotale = data.eau;
+                document.getElementById('totalEau').innerText = eauTotale;
+            }
+            if(data.repas1) document.getElementById('repas1').value = data.repas1;
+            if(data.repas2) document.getElementById('repas2').value = data.repas2;
+            if(data.repas3) document.getElementById('repas3').value = data.repas3;
+            if(data.collations) document.getElementById('collations').value = data.collations;
+            if(data.pas) document.getElementById('pas').value = data.pas;
+            if(data.activite) document.getElementById('activite').value = data.activite;
+        }
+    };
+</script>
 
 </body>
 </html>
