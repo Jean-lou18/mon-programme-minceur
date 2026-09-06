@@ -1,4 +1,5 @@
-
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,7 +16,7 @@
             padding-bottom: 50px;
         }
         .container {
-            max-width: 650px;
+            max-width: 750px;
             margin: 0 auto;
             background: #fff;
             padding: 20px;
@@ -41,7 +42,7 @@
         }
         .card-menu { border-left: 4px solid #3498db; }
         .card-reel { border-left: 4px solid #e67e22; }
-        .card-semaine { border-left: 4px solid #9b59b6; background: #fdfbff; }
+        .card-planning { border-left: 4px solid #9b59b6; background: #fdfbff; }
         
         label {
             display: block;
@@ -57,9 +58,6 @@
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 0.9rem;
-        }
-        textarea.semaine-input {
-            height: 120px;
         }
         button {
             background-color: #3498db;
@@ -114,7 +112,28 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-        @media (max-width: 500px) {
+        .planning-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        .planning-table th, .planning-table td {
+            border: 1px solid #d1d5db;
+            padding: 6px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .planning-table th {
+            background-color: #9b59b6;
+            color: white;
+        }
+        .planning-table textarea {
+            min-height: 45px;
+            resize: vertical;
+            font-size: 0.8rem;
+        }
+        @media (max-width: 600px) {
             .comparison { grid-template-columns: 1fr; }
         }
     </style>
@@ -124,14 +143,67 @@
 <div class="container">
     <h1>Suivi Minceur & Menus</h1>
 
-    <!-- BLOC MENU DE LA SEMAINE MODIFIABLE -->
-    <div class="card card-semaine">
-        <h2>📝 Mon Programme / Menu de la Semaine</h2>
-        <label>Écrivez ou modifiez vos idées de menus pour la semaine ici :</label>
-        <textarea id="menuSemaineGlobal" class="semaine-input" placeholder="Notez ici votre menu de la semaine (idées de repas, courses, etc.)..." oninput="sauvegarderCourant()"></textarea>
+    <div class="card card-planning">
+        <h2>📅 Mon Programme de la Semaine (Modifiable)</h2>
+        <p style="font-size: 0.8rem; color: #666; margin-top:0;">Modifiez directement vos menus de la semaine ci-dessous :</p>
+        <div style="overflow-x: auto;">
+            <table class="planning-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Jour</th>
+                        <th style="width: 28%;">Matin</th>
+                        <th style="width: 29%;">Midi</th>
+                        <th style="width: 28%;">Soir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1er jour</strong></td>
+                        <td><textarea id="p_matin1" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi1" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir1" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2ème jour</strong></td>
+                        <td><textarea id="p_matin2" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi2" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir2" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3ème jour</strong></td>
+                        <td><textarea id="p_matin3" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi3" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir3" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>4ème jour</strong></td>
+                        <td><textarea id="p_matin4" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi4" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir4" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>5ème jour</strong></td>
+                        <td><textarea id="p_matin5" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi5" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir5" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>6ème jour</strong></td>
+                        <td><textarea id="p_matin6" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi6" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir6" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>7ème jour</strong></td>
+                        <td><textarea id="p_matin7" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_midi7" oninput="sauvegarderCourant()"></textarea></td>
+                        <td><textarea id="p_soir7" oninput="sauvegarderCourant()"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- POIDS & EAU -->
     <div class="card">
         <h2>Bilan du Jour</h2>
         <label for="poids">Poids du jour (kg) :</label>
@@ -145,9 +217,7 @@
         <button class="btn-green" onclick="remettreEau()">Remettre à 0</button>
     </div>
 
-    <!-- COMPARATIF MENU PREVU VS REEL -->
     <div class="comparison">
-        <!-- COLONNE MENU -->
         <div class="card card-menu">
             <h2>📋 Menu du Jour (Prévu)</h2>
             <label>Matin :</label>
@@ -163,7 +233,6 @@
             <textarea id="menuCollarions" placeholder="Prévu..." oninput="sauvegarderCourant()"></textarea>
         </div>
 
-        <!-- COLONNE REEL -->
         <div class="card card-reel">
             <h2>🎯 Le Réel (Consommé)</h2>
             <label>Matin :</label>
@@ -180,7 +249,6 @@
         </div>
     </div>
 
-    <!-- SPORT ET ACTIVITE -->
     <div class="card">
         <h2>Sport & Activité Physique</h2>
         <label for="pas">Nombre de pas :</label>
@@ -190,10 +258,8 @@
         <textarea id="activite" placeholder="Ex: 45 min de marche..." oninput="sauvegarderCourant()"></textarea>
     </div>
 
-    <!-- BOUTON VALIDATION -->
     <button class="btn-purple" onclick="validerJournee()">🏁 CLÔTURER ET ENREGISTRER LA JOURNÉE</button>
 
-    <!-- HISTORIQUE COMPARATIF -->
     <div class="card">
         <h2>Historique & Comparatif (Menu vs Réel)</h2>
         <div id="listeHistorique">Aucune journée enregistrée pour l'instant.</div>
@@ -217,8 +283,15 @@
     }
 
     function sauvegarderCourant() {
+        let planningData = {};
+        for(let i=1; i<=7; i++) {
+            planningData[`p_matin${i}`] = document.getElementById(`p_matin${i}`).value;
+            planningData[`p_midi${i}`] = document.getElementById(`p_midi${i}`).value;
+            planningData[`p_soir${i}`] = document.getElementById(`p_soir${i}`).value;
+        }
+
         const donnees = {
-            menuSemaineGlobal: document.getElementById('menuSemaineGlobal').value,
+            planning: planningData,
             poids: document.getElementById('poids').value,
             eau: eauTotale,
             menuMatin: document.getElementById('menuMatin').value,
@@ -301,7 +374,13 @@
         const sauvegarde = localStorage.getItem('suiviMinceurMenuReel');
         if (sauvegarde) {
             const data = JSON.parse(sauvegarde);
-            if(data.menuSemaineGlobal) document.getElementById('menuSemaineGlobal').value = data.menuSemaineGlobal;
+            if(data.planning) {
+                for(let i=1; i<=7; i++) {
+                    if(data.planning[`p_matin${i}`]) document.getElementById(`p_matin${i}`).value = data.planning[`p_matin${i}`];
+                    if(data.planning[`p_midi${i}`]) document.getElementById(`p_midi${i}`).value = data.planning[`p_midi${i}`];
+                    if(data.planning[`p_soir${i}`]) document.getElementById(`p_soir${i}`).value = data.planning[`p_soir${i}`];
+                }
+            }
             if(data.poids) document.getElementById('poids').value = data.poids;
             if(data.eau) {
                 eauTotale = data.eau;
